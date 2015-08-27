@@ -24,6 +24,7 @@ New example for calibration usage
 
 I added barometer_calibration.ino in the examples folder.
 It shows proper usage of the calibration functions.
+Tested on Teensy 3.1 and Arduino Pro Micro.
 
 License
 ------------------
