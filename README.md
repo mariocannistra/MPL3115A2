@@ -11,7 +11,7 @@ Note: I've put together this code to obtain more precise values and a stable beh
 
 List of code merges and improvements:
 - slightly customized the code by http://www.henrylahr.com/?p=99
-- used the offset routines from Michael Lange on mbed.org
+- used the offset routines by Michael Lange (see https://developer.mbed.org/users/sophtware/code/MPL3115A2/ )
 - completed with elevation_offset calculation by digitalmisery comment at https://www.sparkfun.com/products/11084
 - then packaged the calibration function within the original 
 library code by Nathan Seidle - SparkFun Electronics
