@@ -18,6 +18,7 @@ library code by Nathan Seidle - SparkFun Electronics
 - merged with latest Sparkfun fixes by https://github.com/ToniCorinne
 - added some () in a couple of IFs per compiler warnings/suggestions
 - added the proper register config calls sequences using setModeStandby() and setModeActive()
+- fixed the pressure reading routine using the correct bit mask for PDR flag. Thanks to @lectroidmarc and @rabelux for listing the issue here: https://github.com/sparkfun/MPL3115A2_Breakout/issues/12  The chip datasheet https://cdn-shop.adafruit.com/datasheets/1893_datasheet.pdf at page 20 actually shows PDR as 0x04
 
 New example for calibration usage
 ------------------

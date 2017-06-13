@@ -14,7 +14,8 @@
  - merged with latest Sparkfun fixes by https://github.com/ToniCorinne
  - added some () in a couple of IFs per compiler warnings/suggestions
  - added the proper register config calls sequences using setModeStandby() and setModeActive()
-
+ - fixed the pressure reading routine using the correct bit mask for PDR flag. Thanks to @lectroidmarc and @rabelux for listing the issue here: https://github.com/sparkfun/MPL3115A2_Breakout/issues/12  The chip datasheet https://cdn-shop.adafruit.com/datasheets/1893_datasheet.pdf at page 20 actually shows PDR as 0x04
+ 
  License: please see below and refer to the original sources for the license stuff. I guess it's all public domain but please check. And if you meet with Nathan for a beer let me know and consider as beerware my code as well.
 
  Original library by: Nathan Seidle
@@ -50,9 +51,10 @@ float MPL3115A2::readAltitude()
 
 	//Wait for PDR bit, indicates we have new pressure data
 	int counter = 0;
-	while( (IIC_Read(STATUS) & (1<<1)) == 0)
+	
+	while( (IIC_Read(STATUS) & MPL3115A2_REGISTER_STATUS_PDR ) == 0)
 	{
-		if(++counter > 600) return(-999); //Error out after max of 512ms for a read
+		if(++counter > 512) return(-999); //Error out after max of 512ms for a read
 		delay(1);
 	}
 
@@ -92,13 +94,13 @@ float MPL3115A2::readAltitudeFt()
 float MPL3115A2::readPressure()
 {
 	//Check PDR bit, if it's not set then toggle OST
-	if((IIC_Read(STATUS) & (1<<2)) == 0) toggleOneShot(); //Toggle the OST bit causing the sensor to immediately take another reading
+	if((IIC_Read(STATUS) & MPL3115A2_REGISTER_STATUS_PDR ) == 0) toggleOneShot(); //Toggle the OST bit causing the sensor to immediately take another reading
 
 	//Wait for PDR bit, indicates we have new pressure data
 	int counter = 0;
-	while((IIC_Read(STATUS) & (1<<2)) == 0)
+	while( (IIC_Read(STATUS) & MPL3115A2_REGISTER_STATUS_PDR ) == 0)
 	{
-		if(++counter > 600) return(-999); //Error out after max of 512ms for a read
+		if(++counter > 512) return(-999); //Error out after max of 512ms for a read
 		delay(1);
 	}
 
@@ -136,9 +138,9 @@ float MPL3115A2::readTemp()
 
 	//Wait for TDR bit, indicates we have new temp data
 	int counter = 0;
-	while( (IIC_Read(STATUS) & (1<<1)) == 0)
+	while( (IIC_Read(STATUS) & MPL3115A2_REGISTER_STATUS_TDR ) == 0)
 	{
-		if(++counter > 600) return(-999); //Error out after max of 512ms for a read
+		if(++counter > 512) return(-999); //Error out after max of 512ms for a read
 		delay(1);
 	}
 

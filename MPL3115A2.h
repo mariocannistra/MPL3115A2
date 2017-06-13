@@ -22,6 +22,11 @@
 
 #define MPL3115A2_ADDRESS 0x60 // Unshifted 7-bit I2C address for sensor
 
+// @mariocannistra added these 2 lines to solve this issue:  
+// https://github.com/sparkfun/MPL3115A2_Breakout/issues/12
+#define MPL3115A2_REGISTER_STATUS_TDR	0x02
+#define MPL3115A2_REGISTER_STATUS_PDR	0x04
+
 #define STATUS     0x00
 #define OUT_P_MSB  0x01
 #define OUT_P_CSB  0x02
